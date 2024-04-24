@@ -1,10 +1,10 @@
-N = int(input())
-ans = 0
-i = 0
+def f(n):
+    if n == 1:
+        return 1
 
-while N >= 2:
-    ans += N * (2 ** i)
-    N //= 2
-    
-print(ans)
-    
+    return f(n // 2) + f(-(-n // 2))
+
+N = int(input())
+
+
+print(f(N))
