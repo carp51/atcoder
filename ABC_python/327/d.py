@@ -2,11 +2,6 @@ from collections import deque
 
 
 def BFS(start):
-    count = [-1] * (N + 1)
-    visited = [False] * (N + 1)
-
-    visited[start] = True
-    count[start] = 0
     color[start] = 0
 
     que = deque()
@@ -18,15 +13,14 @@ def BFS(start):
         now_city = que.popleft()
 
         for to_city in connect[now_city]:
-            if count[now_city] == count[to_city]:
+            if color[now_city] == color[to_city]:
                 flag = False
-            if visited[to_city] == False:
-                visited[to_city] = True
-                if count[now_city] == 0:
-                    count[to_city] = 1
+            if color[to_city] == -1:
+                if color[now_city] == 0:
+                    color[to_city] = 1
                     color[to_city] = 1
                 else:
-                    count[to_city] = 0
+                    color[to_city] = 0
                     color[to_city] = 0
                 que.append(to_city)
 
