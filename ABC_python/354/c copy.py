@@ -30,62 +30,32 @@ S.index(2)
 S.irange(0,2)
 #[1, 2] S に含まれる 0以上2以下（両端含む）の要素を列挙
 '''
-S = SortedSet([3, 1, 2])
-N = int(input())
-
 S = SortedList()
+N = int(input())
+AC = []
+for i in range(N):
+    A, C = map(int, input().split())
+    AC.append([A, C, i])
+    
+AC.sort()
 
 for i in range(N):
-    A, B = map(int, input().split())
-    S.add([A, B])
+    S.add(AC[i][1])
     
-cnt = 0
+check = [] 
     
-while True:
-    flag = True
-    cnt += 1
-    for i in range(len(S) - 1):
-        if S[i] == S[i + 1]:
-            S.pop(i + 1)
-            S.pop(i)
-            flag = False
-            break
-        
-    if not flag:
-        continue
-        
-    for i in range(len(S) - 1):
-        if S[i][0] == S[i + 1][0]:
-            S.pop(i + 1)
-            S.pop(i)
-            flag = False
-            break
-        
-    if not flag:
-        continue
+for i in range(N):
+    A, C = AC[i][0], AC[i][1]
+    S.discard(C)
     
-    tmp_S = SortedList()
-    
-    for i in range(len(S) - 1):
-        tmp = S.pop(0)
-        tmp_S.add([tmp[1], tmp[0]])
+    index = S.bisect_right(C)
+    if index != 0:
+        check.append(AC[i][2])
         
-    S = tmp_S
-    
-    for i in range(len(S) - 1):
-        if S[i][0] == S[i + 1][0]:
-            S.pop(i + 1)
-            S.pop(i)
-            flag = False
-            break
+print(N - len(check))
+ans = []
+for i in range(N):
+    if not i in check:
+        ans.append(i + 1)
         
-    if not flag:
-        continue
-        
-    if flag:
-        if cnt % 2 == 0:
-            print("Takahashi")
-        else:
-            print("Aoki")
-            
-        break
+print(*ans)
